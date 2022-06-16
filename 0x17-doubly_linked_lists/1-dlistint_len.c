@@ -1,20 +1,30 @@
-#include "main.h"
+#include "lists.h"
 
 /**
- * dlistint_len - Return the number of elements in a linked dlistint_t list
- * @h: The list
+ * dlistint_len -  a function
+ * @h: the head of list
  *
- * Return: The number of nodes
+ * Return: number element of the link list
  */
+
 size_t dlistint_len(const dlistint_t *h)
 {
-	size_t count = 0;
+	size_t nb = 0;
+	const dlistint_t *ptr;
 
-	while (h)
+	if (h == 0)
+		return (nb);
+	/*Recherche de la tete de liste*/
+	if (h->prev != NULL)
+		while (h->prev != NULL)
+			h = h->prev;
+	ptr = h;
+	while (ptr != NULL)
 	{
-		count++;
-		h = h->next;
+		nb++;
+		ptr = ptr->next;
 	}
 
-	return (count);
+	return (nb);
 }
+

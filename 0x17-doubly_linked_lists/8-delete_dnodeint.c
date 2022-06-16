@@ -1,36 +1,43 @@
-#include "main.h"
+#include "lists.h"
+#include <stdlib.h>
+
 /**
- * delete_dnodeint_at_index - delet  a node in a given position
- * @head: double pointer to structure
- * @index: index of node to delete from the list
- * Return: 1 sucess, -1 failure
+ * delete_dnodeint_at_index - Deletes a node from a dlistint_t
+ *                            at a given index.
+ * @head: A pointer to the head of the dlistint_t.
+ * @index: The index of the node to delete.
+ *
+ * Return: Upon success - 1.
+ *         Otherwise - -1.
  */
 int delete_dnodeint_at_index(dlistint_t **head, unsigned int index)
 {
-	dlistint_t *tmp;
-	unsigned int nth = 0;
+	dlistint_t *tmp = *head;
 
-	tmp = *head;
 	if (*head == NULL)
 		return (-1);
-	if (index == 0)
+
+	for (; index != 0; index--)
 	{
-		if (tmp->next)
-			tmp->next->prev = NULL;
-		(*head) = (*head)->next;
-		free(tmp);
-		return (1);
-	}
-	while (tmp && nth < index)
-	{
+		if (tmp == NULL)
+			return (-1);
 		tmp = tmp->next;
-		nth++;
 	}
-	if (tmp == NULL)
-		return (-1);
-	tmp->prev->next = tmp->next;
-	if (tmp->next)
-		tmp->next->prev = tmp->prev;
+
+	if (tmp == *head)
+	{
+		*head = tmp->next;
+		if (*head != NULL)
+			(*head)->prev = NULL;
+	}
+
+	else
+	{
+		tmp->prev->next = tmp->next;
+		if (tmp->next != NULL)
+			tmp->next->prev = tmp->prev;
+	}
+
 	free(tmp);
 	return (1);
 }
